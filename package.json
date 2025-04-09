@@ -1,0 +1,30 @@
+{
+  "name": "@skeetbuild/redis",
+  "version": "0.1.0",
+  "description": "MCP server for interacting with Redis databases",
+  "license": "MIT",
+  "author": "Skeet.build, PBC (https://skeet.build)",
+  "homepage": "https://skeet.build",
+  "bugs": "https://github.com/skeet-build/redis/issues",
+  "type": "module",
+  "bin": {
+    "mcp-server-redis": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.0.1",
+    "redis": "^4.6.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "shx": "^0.3.4",
+    "typescript": "^5.6.2"
+  }
+} 
