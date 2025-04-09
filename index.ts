@@ -190,15 +190,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const commandParts = commandStr.split(/\s+/);
     const command = commandParts[0].toUpperCase();
     
-    // Restrict to read-only commands
-    const readOnlyCommands = [
+    // Restrict to read-only commands and selected SET commands
+    const allowedCommands = [
+      // Read-only commands
       "GET", "MGET", "STRLEN", "HGET", "HGETALL", "HMGET", "HLEN", "HKEYS", "HVALS",
       "LLEN", "LRANGE", "LINDEX", "SISMEMBER", "SMEMBERS", "SCARD", "ZRANGE", "ZRANGEBYSCORE",
-      "ZCARD", "ZSCORE", "ZCOUNT", "KEYS", "TYPE", "TTL", "EXISTS", "INFO", "SCAN"
+      "ZCARD", "ZSCORE", "ZCOUNT", "KEYS", "TYPE", "TTL", "EXISTS", "INFO", "SCAN",
+      // Set read operations
+      "SINTER", "SUNION", "SDIFF", "SRANDMEMBER",
+      // Set write operations
+      "SADD", "SREM", "SPOP", "SMOVE", "SINTERSTORE", "SUNIONSTORE", "SDIFFSTORE"
     ];
     
-    if (!readOnlyCommands.includes(command)) {
-      throw new Error(`Command "${command}" is not allowed. Only read-only commands are permitted.`);
+    if (!allowedCommands.includes(command)) {
+      throw new Error(`Command "${command}" is not allowed. Only certain commands are permitted.`);
     }
     
     try {
